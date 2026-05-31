@@ -1,0 +1,67 @@
+# HELP vllm:generation_tokens_total Number of generation tokens processed.
+# TYPE vllm:generation_tokens_total counter
+vllm:generation_tokens_total{model_name="meta-llama/Meta-Llama-3.1-8B-Instruct"} 1234567
+# HELP vllm:prompt_tokens_total Number of prompt tokens processed.
+# TYPE vllm:prompt_tokens_total counter
+vllm:prompt_tokens_total{model_name="meta-llama/Meta-Llama-3.1-8B-Instruct"} 2345678
+# HELP vllm:request_success_total Count of successfully processed requests.
+# TYPE vllm:request_success_total counter
+vllm:request_success_total{model_name="meta-llama/Meta-Llama-3.1-8B-Instruct"} 4567
+# HELP vllm:num_requests_running Number of requests currently running on GPU.
+# TYPE vllm:num_requests_running gauge
+vllm:num_requests_running{model_name="meta-llama/Meta-Llama-3.1-8B-Instruct"} 6
+# HELP vllm:num_requests_waiting Number of requests waiting to be processed.
+# TYPE vllm:num_requests_waiting gauge
+vllm:num_requests_waiting{model_name="meta-llama/Meta-Llama-3.1-8B-Instruct"} 2
+# HELP vllm:num_requests_swapped Number of requests swapped to CPU.
+# TYPE vllm:num_requests_swapped gauge
+vllm:num_requests_swapped{model_name="meta-llama/Meta-Llama-3.1-8B-Instruct"} 0
+# HELP vllm:gpu_cache_usage_perc GPU KV-cache usage. 1 means 100 percent usage.
+# TYPE vllm:gpu_cache_usage_perc gauge
+vllm:gpu_cache_usage_perc{model_name="meta-llama/Meta-Llama-3.1-8B-Instruct"} 0.38
+# HELP vllm:time_to_first_token_seconds Histogram of time to first token in seconds.
+# TYPE vllm:time_to_first_token_seconds histogram
+vllm:time_to_first_token_seconds_bucket{model_name="meta-llama/Meta-Llama-3.1-8B-Instruct",le="0.01"} 100
+vllm:time_to_first_token_seconds_bucket{model_name="meta-llama/Meta-Llama-3.1-8B-Instruct",le="0.05"} 2500
+vllm:time_to_first_token_seconds_bucket{model_name="meta-llama/Meta-Llama-3.1-8B-Instruct",le="0.1"} 4000
+vllm:time_to_first_token_seconds_bucket{model_name="meta-llama/Meta-Llama-3.1-8B-Instruct",le="0.2"} 4400
+vllm:time_to_first_token_seconds_bucket{model_name="meta-llama/Meta-Llama-3.1-8B-Instruct",le="0.3"} 4530
+vllm:time_to_first_token_seconds_bucket{model_name="meta-llama/Meta-Llama-3.1-8B-Instruct",le="0.5"} 4560
+vllm:time_to_first_token_seconds_bucket{model_name="meta-llama/Meta-Llama-3.1-8B-Instruct",le="1.0"} 4567
+vllm:time_to_first_token_seconds_bucket{model_name="meta-llama/Meta-Llama-3.1-8B-Instruct",le="+Inf"} 4567
+vllm:time_to_first_token_seconds_sum{model_name="meta-llama/Meta-Llama-3.1-8B-Instruct"} 210.4
+vllm:time_to_first_token_seconds_count{model_name="meta-llama/Meta-Llama-3.1-8B-Instruct"} 4567
+# HELP vllm:time_per_output_token_seconds Histogram of time per output token.
+# TYPE vllm:time_per_output_token_seconds histogram
+vllm:time_per_output_token_seconds_bucket{model_name="meta-llama/Meta-Llama-3.1-8B-Instruct",le="0.01"} 500
+vllm:time_per_output_token_seconds_bucket{model_name="meta-llama/Meta-Llama-3.1-8B-Instruct",le="0.02"} 3200
+vllm:time_per_output_token_seconds_bucket{model_name="meta-llama/Meta-Llama-3.1-8B-Instruct",le="0.05"} 4500
+vllm:time_per_output_token_seconds_bucket{model_name="meta-llama/Meta-Llama-3.1-8B-Instruct",le="0.1"} 4560
+vllm:time_per_output_token_seconds_bucket{model_name="meta-llama/Meta-Llama-3.1-8B-Instruct",le="+Inf"} 4567
+vllm:time_per_output_token_seconds_sum{model_name="meta-llama/Meta-Llama-3.1-8B-Instruct"} 85.6
+vllm:time_per_output_token_seconds_count{model_name="meta-llama/Meta-Llama-3.1-8B-Instruct"} 4567
+# HELP vllm:e2e_request_latency_seconds Histogram of end-to-end request latency.
+# TYPE vllm:e2e_request_latency_seconds histogram
+vllm:e2e_request_latency_seconds_bucket{model_name="meta-llama/Meta-Llama-3.1-8B-Instruct",le="1.0"} 2000
+vllm:e2e_request_latency_seconds_bucket{model_name="meta-llama/Meta-Llama-3.1-8B-Instruct",le="2.0"} 4000
+vllm:e2e_request_latency_seconds_bucket{model_name="meta-llama/Meta-Llama-3.1-8B-Instruct",le="5.0"} 4560
+vllm:e2e_request_latency_seconds_bucket{model_name="meta-llama/Meta-Llama-3.1-8B-Instruct",le="+Inf"} 4567
+vllm:e2e_request_latency_seconds_sum{model_name="meta-llama/Meta-Llama-3.1-8B-Instruct"} 8901
+vllm:e2e_request_latency_seconds_count{model_name="meta-llama/Meta-Llama-3.1-8B-Instruct"} 4567
+# HELP vllm:request_prompt_tokens Histogram of prompt tokens per request.
+# TYPE vllm:request_prompt_tokens histogram
+vllm:request_prompt_tokens_bucket{model_name="meta-llama/Meta-Llama-3.1-8B-Instruct",le="128"} 100
+vllm:request_prompt_tokens_bucket{model_name="meta-llama/Meta-Llama-3.1-8B-Instruct",le="256"} 800
+vllm:request_prompt_tokens_bucket{model_name="meta-llama/Meta-Llama-3.1-8B-Instruct",le="512"} 3000
+vllm:request_prompt_tokens_bucket{model_name="meta-llama/Meta-Llama-3.1-8B-Instruct",le="1024"} 4500
+vllm:request_prompt_tokens_bucket{model_name="meta-llama/Meta-Llama-3.1-8B-Instruct",le="+Inf"} 4567
+vllm:request_prompt_tokens_count{model_name="meta-llama/Meta-Llama-3.1-8B-Instruct"} 4567
+vllm:request_prompt_tokens_sum{model_name="meta-llama/Meta-Llama-3.1-8B-Instruct"} 2345678
+# HELP vllm:request_generation_tokens Histogram of generated tokens per request.
+# TYPE vllm:request_generation_tokens histogram
+vllm:request_generation_tokens_bucket{model_name="meta-llama/Meta-Llama-3.1-8B-Instruct",le="128"} 500
+vllm:request_generation_tokens_bucket{model_name="meta-llama/Meta-Llama-3.1-8B-Instruct",le="256"} 3500
+vllm:request_generation_tokens_bucket{model_name="meta-llama/Meta-Llama-3.1-8B-Instruct",le="512"} 4500
+vllm:request_generation_tokens_bucket{model_name="meta-llama/Meta-Llama-3.1-8B-Instruct",le="+Inf"} 4567
+vllm:request_generation_tokens_count{model_name="meta-llama/Meta-Llama-3.1-8B-Instruct"} 4567
+vllm:request_generation_tokens_sum{model_name="meta-llama/Meta-Llama-3.1-8B-Instruct"} 1234567

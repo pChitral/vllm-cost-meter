@@ -1,0 +1,223 @@
+# LLM API Pricing Reference — April 2026
+# Prices in USD per million tokens.
+# Community: update this file and submit a PR when prices change.
+#
+# Fields:
+#   provider:             API provider name
+#   model_type:           proprietary | open_source
+#   input_per_mtok:       $/M input tokens (standard)
+#   output_per_mtok:      $/M output tokens (standard)
+#   cached_input_per_mtok: $/M cached/prompt-cached input tokens (if supported)
+#   context_window:       max tokens (if known)
+#   data_residency:       us | eu | cn | multi (where data is processed)
+#   last_verified:        YYYY-MM when price was last checked
+#
+# Cache pricing notes:
+#   OpenAI:    75% off cached reads for GPT-4.1 family, 50% for GPT-4o family
+#   Anthropic: 90% off cached reads (cache read = 0.1x base input price)
+#   Google:    context caching available, varies by model
+#   Together:  50% off cached input tokens
+#   Fireworks: 50% off cached input tokens
+
+api_pricing:
+  # --- OpenAI (proprietary) ---------------------------------------
+  gpt-4.1:
+    provider: OpenAI
+    model_type: proprietary
+    input_per_mtok: 2.00
+    output_per_mtok: 8.00
+    cached_input_per_mtok: 0.50
+    context_window: 1048576
+    last_verified: "2026-04"
+  gpt-4.1-mini:
+    provider: OpenAI
+    model_type: proprietary
+    input_per_mtok: 0.40
+    output_per_mtok: 1.60
+    cached_input_per_mtok: 0.10
+    context_window: 1048576
+    last_verified: "2026-04"
+  gpt-4.1-nano:
+    provider: OpenAI
+    model_type: proprietary
+    input_per_mtok: 0.10
+    output_per_mtok: 0.40
+    cached_input_per_mtok: 0.025
+    context_window: 1048576
+    last_verified: "2026-04"
+  gpt-4o:
+    provider: OpenAI
+    model_type: proprietary
+    input_per_mtok: 2.50
+    output_per_mtok: 10.00
+    cached_input_per_mtok: 1.25
+    context_window: 128000
+    last_verified: "2026-04"
+  gpt-4o-mini:
+    provider: OpenAI
+    model_type: proprietary
+    input_per_mtok: 0.15
+    output_per_mtok: 0.60
+    cached_input_per_mtok: 0.075
+    context_window: 128000
+    last_verified: "2026-04"
+  o3:
+    provider: OpenAI
+    model_type: proprietary
+    input_per_mtok: 10.00
+    output_per_mtok: 40.00
+    cached_input_per_mtok: 2.50
+    context_window: 200000
+    last_verified: "2026-04"
+  o4-mini:
+    provider: OpenAI
+    model_type: proprietary
+    input_per_mtok: 1.10
+    output_per_mtok: 4.40
+    cached_input_per_mtok: 0.275
+    context_window: 200000
+    last_verified: "2026-04"
+
+  # --- Azure OpenAI / AI Foundry (same models, same pricing) -----
+  # Azure OpenAI matches OpenAI pricing for standard deployments.
+  # Provisioned Throughput Units (PTU) pricing is separate and not
+  # per-token. Listed here for completeness at standard pay-as-you-go.
+  gpt-4.1-azure:
+    provider: Azure OpenAI
+    model_type: proprietary
+    input_per_mtok: 2.00
+    output_per_mtok: 8.00
+    cached_input_per_mtok: 0.50
+    context_window: 1048576
+    last_verified: "2026-04"
+    notes: "Same as OpenAI direct. Batch API: $1/$4. PTU pricing separate."
+  gpt-4o-azure:
+    provider: Azure OpenAI
+    model_type: proprietary
+    input_per_mtok: 2.50
+    output_per_mtok: 10.00
+    cached_input_per_mtok: 1.25
+    context_window: 128000
+    last_verified: "2026-04"
+
+  # --- Anthropic (proprietary) ------------------------------------
+  claude-opus-4.6:
+    provider: Anthropic
+    model_type: proprietary
+    input_per_mtok: 5.00
+    output_per_mtok: 25.00
+    cached_input_per_mtok: 0.50
+    context_window: 1048576
+    last_verified: "2026-04"
+  claude-sonnet-4.6:
+    provider: Anthropic
+    model_type: proprietary
+    input_per_mtok: 3.00
+    output_per_mtok: 15.00
+    cached_input_per_mtok: 0.30
+    context_window: 1048576
+    last_verified: "2026-04"
+  claude-haiku-4.5:
+    provider: Anthropic
+    model_type: proprietary
+    input_per_mtok: 1.00
+    output_per_mtok: 5.00
+    cached_input_per_mtok: 0.10
+    context_window: 200000
+    last_verified: "2026-04"
+
+  # --- Google (proprietary) ---------------------------------------
+  gemini-2.5-pro:
+    provider: Google
+    model_type: proprietary
+    input_per_mtok: 1.25
+    output_per_mtok: 10.00
+    cached_input_per_mtok: 0.315
+    context_window: 1048576
+    last_verified: "2026-04"
+  gemini-2.5-flash:
+    provider: Google
+    model_type: proprietary
+    input_per_mtok: 0.15
+    output_per_mtok: 0.60
+    cached_input_per_mtok: 0.0375
+    context_window: 1048576
+    last_verified: "2026-04"
+
+  # --- DeepSeek (open source, self-hosted API) --------------------
+  deepseek-v4:
+    provider: DeepSeek
+    model_type: open_source
+    input_per_mtok: 0.30
+    output_per_mtok: 0.50
+    cached_input_per_mtok: 0.07
+    context_window: 131072
+    last_verified: "2026-04"
+  deepseek-r1:
+    provider: DeepSeek
+    model_type: open_source
+    input_per_mtok: 0.55
+    output_per_mtok: 2.19
+    cached_input_per_mtok: 0.14
+    context_window: 131072
+    last_verified: "2026-04"
+
+  # --- Together.ai hosted (open source models) --------------------
+  llama-3.3-70b-together:
+    provider: Together.ai
+    model_type: open_source
+    input_per_mtok: 0.88
+    output_per_mtok: 0.88
+    cached_input_per_mtok: 0.44
+    context_window: 131072
+    last_verified: "2026-04"
+  deepseek-r1-together:
+    provider: Together.ai
+    model_type: open_source
+    input_per_mtok: 3.00
+    output_per_mtok: 7.00
+    cached_input_per_mtok: 1.50
+    context_window: 131072
+    last_verified: "2026-04"
+  deepseek-v3.1-together:
+    provider: Together.ai
+    model_type: open_source
+    input_per_mtok: 0.60
+    output_per_mtok: 1.70
+    cached_input_per_mtok: 0.30
+    context_window: 131072
+    last_verified: "2026-04"
+  qwen3.5-9b-together:
+    provider: Together.ai
+    model_type: open_source
+    input_per_mtok: 0.10
+    output_per_mtok: 0.15
+    cached_input_per_mtok: 0.05
+    context_window: 131072
+    last_verified: "2026-04"
+
+  # --- Fireworks.ai hosted (open source models) ------------------
+  qwen3-30b-a3b-fireworks:
+    provider: Fireworks.ai
+    model_type: open_source
+    input_per_mtok: 0.15
+    output_per_mtok: 0.60
+    cached_input_per_mtok: 0.075
+    context_window: 32768
+    last_verified: "2026-04"
+  mixtral-8x7b-fireworks:
+    provider: Fireworks.ai
+    model_type: open_source
+    input_per_mtok: 0.50
+    output_per_mtok: 0.50
+    cached_input_per_mtok: 0.25
+    context_window: 32768
+    last_verified: "2026-04"
+  llama-8b-fireworks:
+    provider: Fireworks.ai
+    model_type: open_source
+    input_per_mtok: 0.20
+    output_per_mtok: 0.20
+    cached_input_per_mtok: 0.10
+    context_window: 8192
+    last_verified: "2026-04"
