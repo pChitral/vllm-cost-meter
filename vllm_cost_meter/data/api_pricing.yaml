@@ -1,6 +1,17 @@
 # LLM API Pricing Reference — April 2026
-# Prices in USD per million tokens.
+# Prices in USD per million tokens. Values are point-in-time snapshots taken
+# from each provider's official pricing page on the last_verified date; they
+# drift, so re-check the source before relying on a comparison.
 # Community: update this file and submit a PR when prices change.
+#
+# Sources (official pricing pages, verified 2026-04):
+#   OpenAI:       https://openai.com/api/pricing/
+#   Azure OpenAI: https://azure.microsoft.com/pricing/details/cognitive-services/openai-service/
+#   Anthropic:    https://www.anthropic.com/pricing
+#   Google:       https://ai.google.dev/gemini-api/docs/pricing
+#   DeepSeek:     https://api-docs.deepseek.com/quick_start/pricing
+#   Together.ai:  https://www.together.ai/pricing
+#   Fireworks.ai: https://fireworks.ai/pricing
 #
 # Fields:
 #   provider:             API provider name

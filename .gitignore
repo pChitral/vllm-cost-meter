@@ -7,6 +7,13 @@ dist/
 build/
 .eggs/
 
+# Unit test / coverage reports
+.pytest_cache/
+
+# Environments / secrets
+.env
+.envrc
+
 # OS
 .DS_Store
 Thumbs.db

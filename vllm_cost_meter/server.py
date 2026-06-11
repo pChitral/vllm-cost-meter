@@ -4,11 +4,25 @@ Minimal HTTP server exposing /cost (JSON) and /metrics (Prometheus).
 Runs in a daemon thread alongside the main scrape loop.
 """
 from __future__ import annotations
+import errno
 import json
+import sys
 import threading
 from http.server import BaseHTTPRequestHandler, HTTPServer
 from typing import Optional
 from vllm_cost_meter.cost import CostSnapshot
+
+
+def _escape_label_value(value) -> str:
+    """Escape a Prometheus label value per the exposition format: a backslash,
+    double-quote, and line feed become ``\\\\``, ``\\"``, and ``\\n``.
+    Backslash must be escaped first."""
+    return (
+        str(value)
+        .replace("\\", "\\\\")
+        .replace('"', '\\"')
+        .replace("\n", "\\n")
+    )
 
 
 class MetricsServer:
@@ -57,8 +71,8 @@ class MetricsServer:
                 if snap:
                     d = snap.to_dict()
                     labels = (
-                        f'model="{snap.config.model_id}",'
-                        f'quant="{snap.config.quantization}",'
+                        f'model="{_escape_label_value(snap.config.model_id)}",'
+                        f'quant="{_escape_label_value(snap.config.quantization)}",'
                         f'n_gpus="{snap.n_gpus}"'
                     )
 
@@ -124,7 +138,16 @@ class MetricsServer:
         class _ReusableHTTPServer(HTTPServer):
             allow_reuse_address = True
 
-        self._httpd = _ReusableHTTPServer((self.host, self.port), self._make_handler())
+        try:
+            self._httpd = _ReusableHTTPServer((self.host, self.port), self._make_handler())
+        except OSError as e:
+            if e.errno == errno.EADDRINUSE:
+                sys.exit(
+                    f"Error: {self.host}:{self.port} is already in use — "
+                    f"another meter or service is bound there. "
+                    f"Pass --port N to pick a different port."
+                )
+            raise
 
     def serve_forever(self) -> None:
         self._bind()
