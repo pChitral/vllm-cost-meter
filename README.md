@@ -1,5 +1,9 @@
 # vllm-cost-meter
 
+[![tests](https://github.com/pChitral/vllm-cost-meter/actions/workflows/tests.yml/badge.svg)](https://github.com/pChitral/vllm-cost-meter/actions/workflows/tests.yml)
+[![arXiv](https://img.shields.io/badge/arXiv-2606.11690-b31b1b.svg)](https://arxiv.org/abs/2606.11690)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+
 **Objective live telemetry + effective cost-per-million-tokens meter for vLLM servers.**
 
 Paper-backed companion to:

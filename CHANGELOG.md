@@ -1,5 +1,25 @@
 # Changelog
 
+## 1.1.4 - 2026-06-10 - Repository polish
+
+### Added
+- `CITATION.cff` so GitHub renders a "Cite this repository" button pointing at
+  the paper (arXiv:2606.11690).
+- GitHub Actions CI (`.github/workflows/tests.yml`) running `pytest` across
+  Python 3.10–3.12, plus a status badge in the README.
+- `CONTRIBUTING.md` covering dev setup, tests, and how to add a benchmark curve.
+- Official per-provider pricing-source URLs in `data/api_pricing.yaml`.
+
+### Fixed
+- Prometheus label values are now escaped (`\\`, `\"`, `\n`) per the exposition
+  format, so a model id or quant string with special characters can't corrupt
+  the `/metrics` output.
+- The metrics server now exits with a clear message on `EADDRINUSE` instead of
+  a raw traceback when the port is already in use.
+
+### Changed
+- `.gitignore` adds `.pytest_cache/`, `.env`, `.envrc`.
+
 ## 1.1.3 - 2026-06-10 - Pre-release accuracy fixes
 
 ### Fixed

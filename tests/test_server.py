@@ -7,7 +7,7 @@ import pytest
 from vllm_cost_meter.cost import CostEngine
 from vllm_cost_meter.detector import VllmConfig
 from vllm_cost_meter.scraper import LiveTelemetry
-from vllm_cost_meter.server import MetricsServer
+from vllm_cost_meter.server import MetricsServer, _escape_label_value
 
 
 @pytest.fixture
@@ -67,3 +67,13 @@ def test_cost_json_schema(server_with_snapshot):
     assert "ttft_p99_ms" in d
     assert "reference_theta_max_tok_s" in d
     assert "penalty_multiplier" not in d
+
+
+def test_label_value_escaping():
+    # Prometheus exposition format: backslash, double-quote, and newline in a
+    # label value must be escaped (backslash first).
+    assert _escape_label_value("plain") == "plain"
+    assert _escape_label_value('a"b') == 'a\\"b'
+    assert _escape_label_value("a\\b") == "a\\\\b"
+    assert _escape_label_value("a\nb") == "a\\nb"
+    assert _escape_label_value(2) == "2"

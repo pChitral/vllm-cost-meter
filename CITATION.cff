@@ -1,0 +1,37 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite the paper below."
+title: vllm-cost-meter
+abstract: >-
+  An objective, live effective-cost-per-million-tokens meter for self-hosted
+  vLLM inference servers; companion artifact to the paper "Beyond Per-Token
+  Pricing: A Concurrency-Aware Methodology for LLM Infrastructure Cost
+  Estimation."
+type: software
+authors:
+  - family-names: Patil
+    given-names: Chitral
+    orcid: "https://orcid.org/0009-0007-9169-0930"
+license: MIT
+repository-code: "https://github.com/pChitral/vllm-cost-meter"
+url: "https://github.com/pChitral/vllm-cost-meter"
+keywords:
+  - llm
+  - vllm
+  - inference
+  - gpu
+  - cost-modeling
+  - benchmarking
+preferred-citation:
+  type: article
+  title: "Beyond Per-Token Pricing: A Concurrency-Aware Methodology for LLM Infrastructure Cost Estimation"
+  authors:
+    - family-names: Patil
+      given-names: Chitral
+      orcid: "https://orcid.org/0009-0007-9169-0930"
+  year: 2026
+  doi: "10.48550/arXiv.2606.11690"
+  url: "https://arxiv.org/abs/2606.11690"
+  identifiers:
+    - type: other
+      value: "arXiv:2606.11690"
+      description: "arXiv preprint ID"
