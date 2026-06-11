@@ -1,0 +1,273 @@
+# vllm_cost_meter/data/benchmark_curves.yaml
+# Saturation throughput reference data from:
+# "Beyond Per-Token Pricing: A Concurrency-Aware Methodology
+#  for LLM Infrastructure Cost Estimation" (arXiv:2606.11690)
+#
+# Every curve declares its workload_protocol so consumers can judge applicability.
+# theta_max_tok_s is RAW SATURATION (no SLO bound). Goodput curves are v2 work.
+#
+# Community: add your own hardware/engine curves via PR. Include workload_protocol.
+
+format_version: "2"
+reference_paper: "https://arxiv.org/abs/2606.11690"
+reference_gpu_hourly_usd: 6.98
+
+# Default workload protocol inherited by all paper-derived curves below.
+# Individual curves may override any field.
+_paper_protocol_default: &paper_protocol
+  input_tokens_mean: 512
+  output_tokens_mean: 256
+  input_distribution: "random"
+  arrival_pattern: "poisson"
+  burstiness: 1.0
+  prefix_caching: false
+  chunked_prefill: false
+  sla_bound: null
+  source: "paper-methods-§4.3"
+
+curves:
+  # -- vLLM engine --------------------------------------------------------
+  - id: "vllm/llama-3.1-8b/fp16/1xh100"
+    engine: vllm
+    model_id: "meta-llama/Meta-Llama-3.1-8B-Instruct"
+    model_aliases: ["Meta-Llama-3.1-8B-Instruct", "llama-3.1-8b", "llama3.1-8b", "llama-3.1-8b-instruct"]
+    quantization: "float16"
+    n_gpus: 1
+    gpu_type: "h100"
+    theta_max_tok_s: 6237.6
+    c_naive_per_mtok: 0.3108
+    source: "paper-C1"
+    workload_protocol: *paper_protocol
+
+  - id: "vllm/llama-3.1-8b/fp8/1xh100"
+    engine: vllm
+    model_id: "meta-llama/Meta-Llama-3.1-8B-Instruct"
+    model_aliases: ["Meta-Llama-3.1-8B-Instruct", "llama-3.1-8b", "llama-3.1-8b-instruct"]
+    quantization: "fp8"
+    n_gpus: 1
+    gpu_type: "h100"
+    theta_max_tok_s: 8155.1
+    c_naive_per_mtok: 0.2378
+    source: "paper-C2"
+    workload_protocol: *paper_protocol
+
+  - id: "vllm/qwen3-30b-a3b/fp16/1xh100"
+    engine: vllm
+    model_id: "Qwen/Qwen3-30B-A3B-Instruct-2507"
+    model_aliases: ["Qwen3-30B-A3B-Instruct-2507", "qwen3-30b", "qwen3-30b-a3b"]
+    quantization: "float16"
+    n_gpus: 1
+    gpu_type: "h100"
+    theta_max_tok_s: 5319.3
+    c_naive_per_mtok: 0.3645
+    source: "paper-C3"
+    workload_protocol: *paper_protocol
+
+  - id: "vllm/qwen3-30b-a3b/fp8/1xh100"
+    engine: vllm
+    model_id: "Qwen/Qwen3-30B-A3B-Instruct-2507"
+    model_aliases: ["Qwen3-30B-A3B-Instruct-2507", "qwen3-30b", "qwen3-30b-a3b"]
+    quantization: "fp8"
+    n_gpus: 1
+    gpu_type: "h100"
+    theta_max_tok_s: 9271.0
+    c_naive_per_mtok: 0.2091
+    source: "paper-C4"
+    workload_protocol: *paper_protocol
+
+  - id: "vllm/mixtral-8x7b/fp16/2xh100"
+    engine: vllm
+    model_id: "mistralai/Mixtral-8x7B-Instruct-v0.1"
+    model_aliases: ["Mixtral-8x7B-Instruct-v0.1", "mixtral-8x7b", "mixtral-8x7b-instruct"]
+    quantization: "float16"
+    n_gpus: 2
+    gpu_type: "h100"
+    theta_max_tok_s: 4454.3
+    c_naive_per_mtok: 0.8706
+    source: "paper-C5"
+    workload_protocol: *paper_protocol
+
+  - id: "vllm/mixtral-8x7b/fp8/2xh100"
+    engine: vllm
+    model_id: "mistralai/Mixtral-8x7B-Instruct-v0.1"
+    model_aliases: ["Mixtral-8x7B-Instruct-v0.1", "mixtral-8x7b", "mixtral-8x7b-instruct"]
+    quantization: "fp8"
+    n_gpus: 2
+    gpu_type: "h100"
+    theta_max_tok_s: 7524.1
+    c_naive_per_mtok: 0.5154
+    source: "paper-C6"
+    workload_protocol: *paper_protocol
+
+  # -- SGLang engine (S1-S6; same workload protocol, different engine flags documented in paper §5.6) --
+  - id: "sglang/llama-3.1-8b/fp16/1xh100"
+    engine: sglang
+    model_id: "meta-llama/Meta-Llama-3.1-8B-Instruct"
+    model_aliases: ["Meta-Llama-3.1-8B-Instruct", "llama-3.1-8b"]
+    quantization: "float16"
+    n_gpus: 1
+    gpu_type: "h100"
+    theta_max_tok_s: 3086.0
+    c_naive_per_mtok: 0.6280
+    source: "paper-S1"
+    workload_protocol: *paper_protocol
+
+  - id: "sglang/llama-3.1-8b/fp8/1xh100"
+    engine: sglang
+    model_id: "meta-llama/Meta-Llama-3.1-8B-Instruct"
+    model_aliases: ["Meta-Llama-3.1-8B-Instruct", "llama-3.1-8b"]
+    quantization: "fp8"
+    n_gpus: 1
+    gpu_type: "h100"
+    theta_max_tok_s: 4191.0
+    c_naive_per_mtok: 0.4630
+    source: "paper-S2"
+    workload_protocol: *paper_protocol
+
+  - id: "sglang/qwen3-30b-a3b/fp16/1xh100"
+    engine: sglang
+    model_id: "Qwen/Qwen3-30B-A3B-Instruct-2507"
+    model_aliases: ["Qwen3-30B-A3B-Instruct-2507", "qwen3-30b"]
+    quantization: "float16"
+    n_gpus: 1
+    gpu_type: "h100"
+    theta_max_tok_s: 2057.0
+    c_naive_per_mtok: 0.9430
+    source: "paper-S3"
+    workload_protocol: *paper_protocol
+
+  - id: "sglang/qwen3-30b-a3b/fp8/1xh100"
+    engine: sglang
+    model_id: "Qwen/Qwen3-30B-A3B-Instruct-2507"
+    model_aliases: ["Qwen3-30B-A3B-Instruct-2507", "qwen3-30b"]
+    quantization: "fp8"
+    n_gpus: 1
+    gpu_type: "h100"
+    theta_max_tok_s: 3704.0
+    c_naive_per_mtok: 0.5230
+    source: "paper-S4"
+    workload_protocol: *paper_protocol
+
+  - id: "sglang/mixtral-8x7b/fp16/2xh100"
+    engine: sglang
+    model_id: "mistralai/Mixtral-8x7B-Instruct-v0.1"
+    model_aliases: ["Mixtral-8x7B-Instruct-v0.1", "mixtral-8x7b"]
+    quantization: "float16"
+    n_gpus: 2
+    gpu_type: "h100"
+    theta_max_tok_s: 1239.0
+    c_naive_per_mtok: 3.1290
+    source: "paper-S5"
+    workload_protocol: *paper_protocol
+
+  - id: "sglang/mixtral-8x7b/fp8/2xh100"
+    engine: sglang
+    model_id: "mistralai/Mixtral-8x7B-Instruct-v0.1"
+    model_aliases: ["Mixtral-8x7B-Instruct-v0.1", "mixtral-8x7b"]
+    quantization: "fp8"
+    n_gpus: 2
+    gpu_type: "h100"
+    theta_max_tok_s: 2831.0
+    c_naive_per_mtok: 1.3700
+    source: "paper-S6"
+    workload_protocol: *paper_protocol
+
+  # -- A100 cross-hardware validation (paper §5.8) -----------------------
+  # 56 runs on 1-2x A100-80GB (GPU-hourly $3.67; workload protocol identical to H100).
+  # These curves validate that the framework's qualitative structure (concurrency-driven
+  # 8-12x C_eff spread, engine ordering) transfers across GPU generations.
+  - id: "vllm/llama-3.1-8b/fp16/1xa100"
+    engine: vllm
+    model_id: "meta-llama/Meta-Llama-3.1-8B-Instruct"
+    model_aliases: ["Meta-Llama-3.1-8B-Instruct", "llama-3.1-8b", "llama3.1-8b", "llama-3.1-8b-instruct"]
+    quantization: "float16"
+    n_gpus: 1
+    gpu_type: "a100"
+    theta_max_tok_s: 2906.3
+    c_naive_per_mtok: 0.3508
+    source: "paper-A1"
+    workload_protocol: *paper_protocol
+
+  - id: "vllm/llama-3.1-8b/fp8/1xa100"
+    engine: vllm
+    model_id: "meta-llama/Meta-Llama-3.1-8B-Instruct"
+    model_aliases: ["Meta-Llama-3.1-8B-Instruct", "llama-3.1-8b", "llama-3.1-8b-instruct"]
+    quantization: "fp8"
+    n_gpus: 1
+    gpu_type: "a100"
+    theta_max_tok_s: 2488.5
+    c_naive_per_mtok: 0.4097
+    source: "paper-A2"
+    workload_protocol: *paper_protocol
+
+  - id: "vllm/qwen3-30b-a3b/fp16/1xa100"
+    engine: vllm
+    model_id: "Qwen/Qwen3-30B-A3B-Instruct-2507"
+    model_aliases: ["Qwen3-30B-A3B-Instruct-2507", "qwen3-30b", "qwen3-30b-a3b"]
+    quantization: "float16"
+    n_gpus: 1
+    gpu_type: "a100"
+    theta_max_tok_s: 2071.3
+    c_naive_per_mtok: 0.4922
+    source: "paper-A3"
+    workload_protocol: *paper_protocol
+
+  - id: "vllm/qwen3-30b-a3b/fp8/1xa100"
+    engine: vllm
+    model_id: "Qwen/Qwen3-30B-A3B-Instruct-2507"
+    model_aliases: ["Qwen3-30B-A3B-Instruct-2507", "qwen3-30b", "qwen3-30b-a3b"]
+    quantization: "fp8"
+    n_gpus: 1
+    gpu_type: "a100"
+    theta_max_tok_s: 2866.6
+    c_naive_per_mtok: 0.3556
+    source: "paper-A4"
+    workload_protocol: *paper_protocol
+
+  - id: "sglang/llama-3.1-8b/fp16/1xa100"
+    engine: sglang
+    model_id: "meta-llama/Meta-Llama-3.1-8B-Instruct"
+    model_aliases: ["Meta-Llama-3.1-8B-Instruct", "llama-3.1-8b"]
+    quantization: "float16"
+    n_gpus: 1
+    gpu_type: "a100"
+    theta_max_tok_s: 1804.0
+    c_naive_per_mtok: 0.5651
+    source: "paper-AS1"
+    workload_protocol: *paper_protocol
+
+  - id: "vllm/mixtral-8x7b/fp16/2xa100"
+    engine: vllm
+    model_id: "mistralai/Mixtral-8x7B-Instruct-v0.1"
+    model_aliases: ["Mixtral-8x7B-Instruct-v0.1", "mixtral-8x7b", "mixtral-8x7b-instruct"]
+    quantization: "float16"
+    n_gpus: 2
+    gpu_type: "a100"
+    theta_max_tok_s: 2346.7
+    c_naive_per_mtok: 0.8688
+    source: "paper-M1"
+    workload_protocol: *paper_protocol
+
+  - id: "sglang/mixtral-8x7b/fp16/2xa100"
+    engine: sglang
+    model_id: "mistralai/Mixtral-8x7B-Instruct-v0.1"
+    model_aliases: ["Mixtral-8x7B-Instruct-v0.1", "mixtral-8x7b"]
+    quantization: "float16"
+    n_gpus: 2
+    gpu_type: "a100"
+    theta_max_tok_s: 647.2
+    c_naive_per_mtok: 3.1505
+    source: "paper-M2"
+    workload_protocol: *paper_protocol
+
+  - id: "vllm/mixtral-8x7b/fp16/4xa100"
+    engine: vllm
+    model_id: "mistralai/Mixtral-8x7B-Instruct-v0.1"
+    model_aliases: ["Mixtral-8x7B-Instruct-v0.1", "mixtral-8x7b", "mixtral-8x7b-instruct"]
+    quantization: "float16"
+    n_gpus: 4
+    gpu_type: "a100"
+    theta_max_tok_s: 3132.9
+    c_naive_per_mtok: 1.3016
+    source: "paper-M3"
+    workload_protocol: *paper_protocol
